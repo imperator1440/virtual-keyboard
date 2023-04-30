@@ -68,3 +68,8 @@ textarea {
 .key__space {
   flex-grow: 1;
 }
+
+.key__caps_on {
+  border-radius: 5px;
+  border-color: blue;
+}

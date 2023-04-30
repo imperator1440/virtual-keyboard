@@ -2,7 +2,58 @@ const container = document.createElement('main');
 const textField = document.createElement('textarea');
 const keyboard = document.createElement('div');
 
+let isCaps = false;
+let isShift = false;
+
 keyboard.setAttribute('class', 'keyboard');
+
+const addEvent = (key, extraClass) => {
+  switch (extraClass) {
+    case '_printable':
+      key.addEventListener('click', () => (print(key.innerText)));
+      break;
+    case 'key__space':
+      key.addEventListener('click', () => (print(' ')));
+      break;
+    case 'key__tab':
+      key.addEventListener('click', () => (tabEvent()));
+      break;
+    case 'key__caps':
+      key.addEventListener('click', () => (capsSwitch(key)));
+      break;
+    case 'key__shift_left':
+      key.addEventListener('mouseup', () => (shiftEvent()));
+      key.addEventListener('mousedown', () => (shiftEvent()));
+      break;
+    case 'key__shift_right':
+      key.addEventListener('mousedown', () => (shiftEvent()));
+      key.addEventListener('mouseup', () => (shiftEvent()));
+      break;
+    default:
+      break;
+  }
+};
+
+const print = (symbol) => {
+  if (isCaps || isShift) {
+    textField.value += symbol[0].toLowerCase();
+  } else {
+    textField.value += symbol[0];
+  }
+};
+
+const tabEvent = () => {
+  textField.value += '  ';
+};
+
+const capsSwitch = (key) => {
+  isCaps = !isCaps;
+  key.classList.toggle('key__caps_on');
+};
+
+const shiftEvent = () => {
+  isShift = !isShift;
+};
 
 const createKey = (keyText, extraClass, extraText) => {
   const key = document.createElement('button');
@@ -11,6 +62,7 @@ const createKey = (keyText, extraClass, extraText) => {
 
   if (extraClass) {
     key.classList.add(extraClass);
+    addEvent(key, extraClass);
   }
 
   if (extraText) {
@@ -94,3 +146,4 @@ addKey(keyboard, createKey('\u2192', 'key__right'));
 
 container.append(textField, keyboard);
 document.body.append(container);
+
