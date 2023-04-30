@@ -29,6 +29,7 @@ const addEvent = (key, extraClass) => {
       key.addEventListener('mousedown', () => (shiftEvent()));
       key.addEventListener('mouseup', () => (shiftEvent()));
       break;
+    
     default:
       break;
   }
@@ -36,9 +37,9 @@ const addEvent = (key, extraClass) => {
 
 const print = (symbol) => {
   if (isCaps || isShift) {
-    textField.value += symbol[0].toLowerCase();
-  } else {
     textField.value += symbol[0];
+  } else {
+    textField.value += symbol[0].toLowerCase();
   }
 };
 
@@ -75,75 +76,169 @@ const createKey = (keyText, extraClass, extraText) => {
   return key;
 };
 
-const addKey = (keyboard, key) => {
-  keyboard.append(key);
-};
 
-addKey(keyboard, createKey('`', '_printable', '~'));
-addKey(keyboard, createKey('1', '_printable', '!'));
-addKey(keyboard, createKey('2', '_printable', '@'));
-addKey(keyboard, createKey('3', '_printable', '#'));
-addKey(keyboard, createKey('4', '_printable', '$'));
-addKey(keyboard, createKey('5', '_printable', '%'));
-addKey(keyboard, createKey('6', '_printable', '^'));
-addKey(keyboard, createKey('7', '_printable', '&'));
-addKey(keyboard, createKey('8', '_printable', '*'));
-addKey(keyboard, createKey('9', '_printable', '('));
-addKey(keyboard, createKey('0', '_printable', ')'));
-addKey(keyboard, createKey('-', '_printable', '_'));
-addKey(keyboard, createKey('=', '_printable', '+'));
-addKey(keyboard, createKey('Backspace', 'key__backspace'));
-addKey(keyboard, createKey('Tab', 'key__tab'));
-addKey(keyboard, createKey('Q', '_printable'));
-addKey(keyboard, createKey('W', '_printable'));
-addKey(keyboard, createKey('E', '_printable'));
-addKey(keyboard, createKey('R', '_printable'));
-addKey(keyboard, createKey('T', '_printable'));
-addKey(keyboard, createKey('Y', '_printable'));
-addKey(keyboard, createKey('U', '_printable'));
-addKey(keyboard, createKey('I', '_printable'));
-addKey(keyboard, createKey('O', '_printable'));
-addKey(keyboard, createKey('P', '_printable'));
-addKey(keyboard, createKey('[', '_printable'));
-addKey(keyboard, createKey(']', '_printable'));
-addKey(keyboard, createKey('\\', '_printable', '/'));
-addKey(keyboard, createKey('Del'));
-addKey(keyboard, createKey('Caps Lock', 'key__caps'));
-addKey(keyboard, createKey('A', '_printable'));
-addKey(keyboard, createKey('S', '_printable'));
-addKey(keyboard, createKey('D', '_printable'));
-addKey(keyboard, createKey('F', '_printable'));
-addKey(keyboard, createKey('G', '_printable'));
-addKey(keyboard, createKey('H', '_printable'));
-addKey(keyboard, createKey('J', '_printable'));
-addKey(keyboard, createKey('K', '_printable'));
-addKey(keyboard, createKey('L', '_printable'));
-addKey(keyboard, createKey(';', '_printable'));
-addKey(keyboard, createKey(`'`, '_printable'));
-addKey(keyboard, createKey('Enter', 'key__enter'));
-addKey(keyboard, createKey('Shift', 'key__shift_left'));
-addKey(keyboard, createKey('Z', '_printable'));
-addKey(keyboard, createKey('X', '_printable'));
-addKey(keyboard, createKey('C', '_printable'));
-addKey(keyboard, createKey('V', '_printable'));
-addKey(keyboard, createKey('B', '_printable'));
-addKey(keyboard, createKey('N', '_printable'));
-addKey(keyboard, createKey('M', '_printable'));
-addKey(keyboard, createKey(',', '_printable'));
-addKey(keyboard, createKey('.', '_printable'));
-addKey(keyboard, createKey('/', '_printable'));
-addKey(keyboard, createKey('\u2191', 'key__up'));
-addKey(keyboard, createKey('Shift', 'key__shift_right'));
-addKey(keyboard, createKey('Ctrl', 'key__ctrl'));
-addKey(keyboard, createKey('Win', 'key__win'));
-addKey(keyboard, createKey('Alt', 'key__alt'));
-addKey(keyboard, createKey('Space', 'key__space'));
-addKey(keyboard, createKey('Alt', 'key__alt'));
-addKey(keyboard, createKey('Ctrl', 'key__ctrl'));
-addKey(keyboard, createKey('\u2190', 'key__left'));
-addKey(keyboard, createKey('\u2193', 'key__down'));
-addKey(keyboard, createKey('\u2192', 'key__right'));
+keyboard.append(createKey('`', '_printable', '~'));
+keyboard.append(createKey('1', '_printable', '!'));
+keyboard.append(createKey('2', '_printable', '@'));
+keyboard.append(createKey('3', '_printable', '#'));
+keyboard.append(createKey('4', '_printable', '$'));
+keyboard.append(createKey('5', '_printable', '%'));
+keyboard.append(createKey('6', '_printable', '^'));
+keyboard.append(createKey('7', '_printable', '&'));
+keyboard.append(createKey('8', '_printable', '*'));
+keyboard.append(createKey('9', '_printable', '('));
+keyboard.append(createKey('0', '_printable', ')'));
+keyboard.append(createKey('-', '_printable', '_'));
+keyboard.append(createKey('=', '_printable', '+'));
+keyboard.append(createKey('Backspace', 'key__backspace'));
+keyboard.append(createKey('Tab', 'key__tab'));
+keyboard.append(createKey('Q', '_printable'));
+keyboard.append(createKey('W', '_printable'));
+keyboard.append(createKey('E', '_printable'));
+keyboard.append(createKey('R', '_printable'));
+keyboard.append(createKey('T', '_printable'));
+keyboard.append(createKey('Y', '_printable'));
+keyboard.append(createKey('U', '_printable'));
+keyboard.append(createKey('I', '_printable'));
+keyboard.append(createKey('O', '_printable'));
+keyboard.append(createKey('P', '_printable'));
+keyboard.append(createKey('[', '_printable', '{'));
+keyboard.append(createKey(']', '_printable', '}'));
+keyboard.append(createKey('\\', '_printable', '|'));
+keyboard.append(createKey('Del'));
+keyboard.append(createKey('Caps Lock', 'key__caps'));
+keyboard.append(createKey('A', '_printable'));
+keyboard.append(createKey('S', '_printable'));
+keyboard.append(createKey('D', '_printable'));
+keyboard.append(createKey('F', '_printable'));
+keyboard.append(createKey('G', '_printable'));
+keyboard.append(createKey('H', '_printable'));
+keyboard.append(createKey('J', '_printable'));
+keyboard.append(createKey('K', '_printable'));
+keyboard.append(createKey('L', '_printable'));
+keyboard.append(createKey(';', '_printable', ':'));
+keyboard.append(createKey(`'`, '_printable', '"'));
+keyboard.append(createKey('Enter', 'key__enter'));
+keyboard.append(createKey('Shift', 'key__shift_left'));
+keyboard.append(createKey('Z', '_printable'));
+keyboard.append(createKey('X', '_printable'));
+keyboard.append(createKey('C', '_printable'));
+keyboard.append(createKey('V', '_printable'));
+keyboard.append(createKey('B', '_printable'));
+keyboard.append(createKey('N', '_printable'));
+keyboard.append(createKey('M', '_printable'));
+keyboard.append(createKey(',', '_printable', '<'));
+keyboard.append(createKey('.', '_printable', '>'));
+keyboard.append(createKey('/', '_printable', '?'));
+keyboard.append(createKey('\u2191', 'key__up'));
+keyboard.append(createKey('Shift', 'key__shift_right'));
+keyboard.append(createKey('Ctrl', 'key__ctrl'));
+keyboard.append(createKey('Win', 'key__win'));
+keyboard.append(createKey('Alt', 'key__alt'));
+keyboard.append(createKey('Space', 'key__space'));
+keyboard.append(createKey('Alt', 'key__alt'));
+keyboard.append(createKey('Ctrl', 'key__ctrl'));
+keyboard.append(createKey('\u2190', 'key__left'));
+keyboard.append(createKey('\u2193', 'key__down'));
+keyboard.append(createKey('\u2192', 'key__right'));
 
 container.append(textField, keyboard);
 document.body.append(container);
 
+const buttons = Array.from(keyboard.children);
+
+const findButton = (e) => {
+
+  switch (e.key) {
+
+    case ' ':
+      e.preventDefault();
+      textField.value += ' ';
+      return buttons.find(button => button.innerText === 'Space');
+
+    case 'Tab':
+      e.preventDefault();
+      textField.value += '  ';
+      return buttons.find(button => button.innerText === 'Tab');
+
+    case 'CapsLock':
+      e.preventDefault();
+      return buttons.find(button => button.innerText === 'Caps Lock');
+
+    case 'Shift':
+      e.preventDefault();
+      if (e.code === 'ShiftRight') {
+        shiftEvent();
+        return buttons.find(button => button.classList.contains('key__shift_right'));
+      } else {
+        shiftEvent();
+        return buttons.find(button => button.classList.contains('key__shift_left'));
+      }
+
+    case 'Alt':
+      e.preventDefault();
+      return buttons.find(button => button.innerText === 'Alt');   
+
+    case 'Control':
+      e.preventDefault();
+      return buttons.find(button => button.innerText === 'Ctrl');   
+
+    case 'OS':
+      e.preventDefault();
+      return buttons.find(button => button.innerText === 'Win'); 
+
+    case 'ArrowUp':
+      e.preventDefault();
+      return buttons.find(button => button.innerText === '\u2191'); 
+
+    case 'ArrowDown':
+      e.preventDefault();
+      return buttons.find(button => button.innerText === '\u2193'); 
+
+    case 'ArrowLeft':
+      e.preventDefault();
+      return buttons.find(button => button.innerText === '\u2190');
+
+    case 'ArrowRight':
+      e.preventDefault();
+      return buttons.find(button => button.innerText === '\u2192');
+
+    case 'Backspace':
+      e.preventDefault();
+      return buttons.find(button => button.innerText === 'Backspace');  
+
+    case 'Delete':
+      e.preventDefault();
+      return buttons.find(button => button.innerText === 'Del');  
+                    
+    default:
+      e.preventDefault();
+      if (isShift) {
+        return buttons.find(button => button.lastChild.textContent.toLowerCase() === e.key.toLowerCase());
+      } else {
+        return buttons.find(button => button.firstChild.textContent.toLowerCase() === e.key.toLowerCase()); 
+      }
+  }
+};
+
+document.addEventListener('keydown', (e) => {
+  e.preventDefault();
+  const button = findButton(e);
+
+  button.classList.add('keyboard__key_push');
+
+  if (button.classList.contains('key__caps')) {
+    capsSwitch(button);
+  }
+
+  if (button.classList.contains('_printable')) {
+    textField.value += e.key;  
+  }
+});
+
+document.addEventListener('keyup', (e) => {
+  e.preventDefault();
+  const button = findButton(e);
+
+  button.classList.remove('keyboard__key_push');
+});

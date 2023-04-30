@@ -41,6 +41,12 @@ textarea {
   cursor: pointer;
 }
 
+.keyboard__key_push {
+  background-color: grey;
+  border-radius: 5px;
+  border: 2px solid grey;
+}
+
 .key__extraText {
   position: absolute;
   font-size: 12px;
