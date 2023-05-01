@@ -1,17 +1,16 @@
 
-/* 
-  TODO:
-  3) Смена языка
-*/
+//alert('Чтобы всё работало корректно, язык ввода вашего устройства должен соответствовать языку виртуальной клавиатуры.\n\nFor everything to work correctly, the input language of your device must match the language of the virtual keyboard.')
+//alert('Нажмите shift + alt для смены языка.\n\nPush shift + alt to change language.');
 
 const container = document.createElement('main');
 const textField = document.createElement('textarea');
+
 const keyboard = document.createElement('div');
+keyboard.setAttribute('class', 'keyboard');
 
 let isCaps = false;
 let isShift = false;
-
-keyboard.setAttribute('class', 'keyboard');
+let isAlt = false;
 
 const addEvent = (key, extraClass) => {
 
@@ -53,6 +52,22 @@ const addEvent = (key, extraClass) => {
       key.addEventListener('click', () => delNext());
       break;
 
+    case 'key__up':
+      key.addEventListener('click', () => arrowEvent(key));
+      break;
+
+    case 'key__left':
+      key.addEventListener('click', () => arrowEvent(key));
+      break
+
+    case 'key__right':
+      key.addEventListener('click', () => arrowEvent(key));
+      break;
+
+    case 'key__down':
+      key.addEventListener('click', () => arrowEvent(key));
+      break;
+
     default:
       break;
   }
@@ -69,6 +84,10 @@ const print = (symbol) => {
 
 };
 
+const arrowEvent = (arrow) => {
+  textField.value += arrow.innerText;
+};
+
 const tabEvent = () => {
   textField.value += '  ';
 };
@@ -80,6 +99,13 @@ const capsSwitch = (key) => {
 
 const shiftEvent = (value) => {
   isShift = value;
+};
+
+const altEvent = (value) => {
+  isAlt = value;
+  if (isAlt && isShift) {
+    changeLanguage(russian);
+  }
 };
 
 const addLine = () => {
@@ -105,6 +131,7 @@ const createKey = (keyText, extraClass, extraText) => {
   const key = document.createElement('button');
   key.innerText = keyText;
   key.setAttribute('class', 'keyboard__key');
+  key.setAttribute('data-value', keyText);
 
   if (extraClass) {
     key.classList.add(extraClass);
@@ -147,8 +174,8 @@ keyboard.append(createKey('U', '_printable'));
 keyboard.append(createKey('I', '_printable'));
 keyboard.append(createKey('O', '_printable'));
 keyboard.append(createKey('P', '_printable'));
-keyboard.append(createKey('[', '_printable', '{'));
-keyboard.append(createKey(']', '_printable', '}'));
+keyboard.append(createKey('[', '_printable'));
+keyboard.append(createKey(']', '_printable'));
 keyboard.append(createKey('\\', '_printable', '|'));
 keyboard.append(createKey('Del', 'key__del'));
 keyboard.append(createKey('Caps Lock', 'key__caps'));
@@ -161,8 +188,8 @@ keyboard.append(createKey('H', '_printable'));
 keyboard.append(createKey('J', '_printable'));
 keyboard.append(createKey('K', '_printable'));
 keyboard.append(createKey('L', '_printable'));
-keyboard.append(createKey(';', '_printable', ':'));
-keyboard.append(createKey(`'`, '_printable', '"'));
+keyboard.append(createKey(';', '_printable'));
+keyboard.append(createKey(`'`, '_printable'));
 keyboard.append(createKey('Enter', 'key__enter'));
 keyboard.append(createKey('Shift', 'key__shift_left'));
 keyboard.append(createKey('Z', '_printable'));
@@ -172,9 +199,9 @@ keyboard.append(createKey('V', '_printable'));
 keyboard.append(createKey('B', '_printable'));
 keyboard.append(createKey('N', '_printable'));
 keyboard.append(createKey('M', '_printable'));
-keyboard.append(createKey(',', '_printable', '<'));
-keyboard.append(createKey('.', '_printable', '>'));
-keyboard.append(createKey('/', '_printable', '?'));
+keyboard.append(createKey(',', '_printable'));
+keyboard.append(createKey('.', '_printable'));
+keyboard.append(createKey('/', '_printable', '.'));
 keyboard.append(createKey('\u2191', 'key__up'));
 keyboard.append(createKey('Shift', 'key__shift_right'));
 keyboard.append(createKey('Ctrl', 'key__ctrl_left'));
@@ -191,6 +218,32 @@ container.append(textField, keyboard);
 document.body.append(container);
 
 const buttons = Array.from(keyboard.children);
+
+const checkCurrentLanguage = () => {
+  if(buttons[0].innerText[0] == '`'){
+    return russian;
+  } else {
+    return english;
+  }
+};
+
+const changeLanguage = () => {
+  let layout = checkCurrentLanguage();
+  buttons.forEach(key =>{
+    if (key.classList.contains('_printable')) {
+      const keyNodes = key.childNodes;
+      const currentValue = key.getAttribute('data-value');
+      const newValue = layout[currentValue] || currentValue;
+      key.setAttribute('data-value', newValue);
+  
+      keyNodes.forEach(node => {
+        if (node.nodeType === Node.TEXT_NODE) {
+          node.textContent = newValue;
+        }
+      });
+    }
+  });
+};
 
 const findButton = (e) => {
 
@@ -223,8 +276,10 @@ const findButton = (e) => {
     case 'Alt':
 
       if (e.code === 'AltRight') {
+        altEvent(true);
         return buttons.find(button => button.classList.contains('key__alt_right'));
       } else {
+        altEvent(true);
         return buttons.find(button => button.classList.contains('key__alt_left'));
       }
 
@@ -283,7 +338,7 @@ document.addEventListener('keydown', (e) => {
   try {
     button.classList.add('keyboard__key_push');
   } catch (error) {
-    alert("Sorry. This key doesn't exist.");
+    alert("Клавиши нет на виртуальной клавиатуре\nThis key doesn't exist on virtual keyboard");
     return;
   }
 
@@ -297,6 +352,10 @@ document.addEventListener('keydown', (e) => {
 
     if (e.key === 'Shift') {
       shiftEvent(false);
+    }
+
+    if (e.key === 'Alt') {
+      altEvent(false);
     }
   
     button.classList.remove('keyboard__key_push');
