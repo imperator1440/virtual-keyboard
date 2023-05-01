@@ -1,4 +1,4 @@
-alert('Чтобы всё работало корректно, язык ввода вашего устройства должен соответствовать языку виртуальной клавиатуры.\n\nFor everything to work correctly, the input language of your device must match the language of the virtual keyboard.')
+alert('Чтобы всё работало корректно, язык ввода вашего устройства должен соответствовать языку виртуальной клавиатуры.\n\nFor everything to work correctly, the input language of your device must match the language of the virtual keyboard.');
 alert('Нажмите shift + alt для смены языка.\n\nPush shift + alt to change language.');
 
 const container = document.createElement('main');
@@ -15,65 +15,65 @@ const addEvent = (key, extraClass) => {
 
   switch (extraClass) {
 
-    case '_printable':
-      key.addEventListener('click', () => print(key.innerText));
-      break;
+  case '_printable':
+    key.addEventListener('click', () => printSymbol(key.innerText));
+    break;
       
-    case 'key__space':
-      key.addEventListener('click', () => print(' '));
-      break;
+  case 'key__space':
+    key.addEventListener('click', () => printSymbol(' '));
+    break;
 
-    case 'key__tab':
-      key.addEventListener('click', () => tabEvent());
-      break;
+  case 'key__tab':
+    key.addEventListener('click', () => tabEvent());
+    break;
 
-    case 'key__caps':
-      key.addEventListener('click', () => capsSwitch(key));
-      break;
+  case 'key__caps':
+    key.addEventListener('click', () => capsSwitch(key));
+    break;
 
-    case 'key__shift_left':
-      key.addEventListener('mouseup', () => shiftEvent(false));
-      key.addEventListener('mousedown', () => shiftEvent(true));
-      break;
+  case 'key__shift_left':
+    key.addEventListener('mouseup', () => shiftEvent(false));
+    key.addEventListener('mousedown', () => shiftEvent(true));
+    break;
 
-    case 'key__shift_right':
-      key.addEventListener('mousedown', () => shiftEvent(true));
-      key.addEventListener('mouseup', () => shiftEvent(false));
-      break;
+  case 'key__shift_right':
+    key.addEventListener('mousedown', () => shiftEvent(true));
+    key.addEventListener('mouseup', () => shiftEvent(false));
+    break;
 
-    case 'key__enter':
-      key.addEventListener('click', () => addLine());
-      break;
-    case 'key__backspace':
-      key.addEventListener('click', () => delPrevious());
-      break;
-    case 'key__del':
-      key.addEventListener('click', () => delNext());
-      break;
+  case 'key__enter':
+    key.addEventListener('click', () => addLine());
+    break;
+  case 'key__backspace':
+    key.addEventListener('click', () => delPrevious());
+    break;
+  case 'key__del':
+    key.addEventListener('click', () => delNext());
+    break;
 
-    case 'key__up':
-      key.addEventListener('click', () => arrowEvent(key));
-      break;
+  case 'key__up':
+    key.addEventListener('click', () => arrowEvent(key));
+    break;
 
-    case 'key__left':
-      key.addEventListener('click', () => arrowEvent(key));
-      break
+  case 'key__left':
+    key.addEventListener('click', () => arrowEvent(key));
+    break;
 
-    case 'key__right':
-      key.addEventListener('click', () => arrowEvent(key));
-      break;
+  case 'key__right':
+    key.addEventListener('click', () => arrowEvent(key));
+    break;
 
-    case 'key__down':
-      key.addEventListener('click', () => arrowEvent(key));
-      break;
+  case 'key__down':
+    key.addEventListener('click', () => arrowEvent(key));
+    break;
 
-    default:
-      break;
+  default:
+    break;
   }
 
 };
 
-const print = (symbol) => {
+const printSymbol = (symbol) => {
 
   if (isCaps || isShift) {
     textField.value += symbol[0];
@@ -188,7 +188,7 @@ keyboard.append(createKey('J', '_printable'));
 keyboard.append(createKey('K', '_printable'));
 keyboard.append(createKey('L', '_printable'));
 keyboard.append(createKey(';', '_printable'));
-keyboard.append(createKey(`'`, '_printable'));
+keyboard.append(createKey('\'', '_printable'));
 keyboard.append(createKey('Enter', 'key__enter'));
 keyboard.append(createKey('Shift', 'key__shift_left'));
 keyboard.append(createKey('Z', '_printable'));
@@ -228,9 +228,11 @@ const checkCurrentLanguage = () => {
 
 const changeLanguage = (storageLayout) => {
   let layout = checkCurrentLanguage();
+
   if (storageLayout) {
     layout = storageLayout;
   }
+
   buttons.forEach(key =>{
     if (key.classList.contains('_printable')) {
       const keyNodes = key.childNodes;
@@ -263,84 +265,84 @@ const findButton = (e) => {
 
   switch (e.key) {
 
-    case ' ':
-      textField.value += ' ';
-      return buttons.find(button => button.innerText === 'Space');
+  case ' ':
+    textField.value += ' ';
+    return buttons.find(button => button.innerText === 'Space');
 
-    case 'Tab':
-      textField.value += '  ';
-      return buttons.find(button => button.innerText === 'Tab');
+  case 'Tab':
+    textField.value += '  ';
+    return buttons.find(button => button.innerText === 'Tab');
 
-    case 'CapsLock':
-      return buttons.find(button => button.innerText === 'Caps Lock');
+  case 'CapsLock':
+    return buttons.find(button => button.innerText === 'Caps Lock');
 
-    case 'Shift':
+  case 'Shift':
 
     shiftEvent(true);
-      if (e.code === 'ShiftRight') {
-        return buttons.find(button => button.classList.contains('key__shift_right'));
-      } else {
-        return buttons.find(button => button.classList.contains('key__shift_left'));
-      }
+    if (e.code === 'ShiftRight') {
+      return buttons.find(button => button.classList.contains('key__shift_right'));
+    } else {
+      return buttons.find(button => button.classList.contains('key__shift_left'));
+    }
 
-    case 'Enter':
-      addLine();
-      return buttons.find(button => button.innerText === 'Enter');
+  case 'Enter':
+    addLine();
+    return buttons.find(button => button.innerText === 'Enter');
 
-    case 'Alt':
+  case 'Alt':
 
-      if (e.code === 'AltRight') {
-        altEvent(true);
-        return buttons.find(button => button.classList.contains('key__alt_right'));
-      } else {
-        altEvent(true);
-        return buttons.find(button => button.classList.contains('key__alt_left'));
-      }
+    if (e.code === 'AltRight') {
+      altEvent(true);
+      return buttons.find(button => button.classList.contains('key__alt_right'));
+    } else {
+      altEvent(true);
+      return buttons.find(button => button.classList.contains('key__alt_left'));
+    }
 
-    case 'Control':
+  case 'Control':
       
-      if (e.code === 'ControlRight') {
-        return buttons.find(button => button.classList.contains('key__ctrl_right'));
-      } else {
-        return buttons.find(button => button.classList.contains('key__ctrl_left'));
-      } 
+    if (e.code === 'ControlRight') {
+      return buttons.find(button => button.classList.contains('key__ctrl_right'));
+    } else {
+      return buttons.find(button => button.classList.contains('key__ctrl_left'));
+    } 
 
-    case 'OS':
-      return buttons.find(button => button.innerText === 'Win'); 
+  case 'OS':
+    return buttons.find(button => button.innerText === 'Win'); 
 
-    case 'ArrowUp':
-      textField.value += '\u2191';
-      return buttons.find(button => button.innerText === '\u2191'); 
+  case 'ArrowUp':
+    textField.value += '\u2191';
+    return buttons.find(button => button.innerText === '\u2191'); 
 
-    case 'ArrowDown':
-      textField.value += '\u2193';
-      return buttons.find(button => button.innerText === '\u2193'); 
+  case 'ArrowDown':
+    textField.value += '\u2193';
+    return buttons.find(button => button.innerText === '\u2193'); 
 
-    case 'ArrowLeft':
-      textField.value += '\u2190';
-      return buttons.find(button => button.innerText === '\u2190');
+  case 'ArrowLeft':
+    textField.value += '\u2190';
+    return buttons.find(button => button.innerText === '\u2190');
 
-    case 'ArrowRight':
-      textField.value += '\u2192';
-      return buttons.find(button => button.innerText === '\u2192');
+  case 'ArrowRight':
+    textField.value += '\u2192';
+    return buttons.find(button => button.innerText === '\u2192');
 
-    case 'Delete':
-      delNext();
-      return buttons.find(button => button.innerText === 'Del'); 
+  case 'Delete':
+    delNext();
+    return buttons.find(button => button.innerText === 'Del'); 
 
-    case 'Backspace': 
-      delPrevious();
-      return buttons.find(button => button.innerText === 'Backspace'); 
+  case 'Backspace': 
+    delPrevious();
+    return buttons.find(button => button.innerText === 'Backspace'); 
 
-    default:
+  default:
 
-      if (isShift) {
-        textField.value += e.key;  
-        return buttons.find(button => button.lastChild.textContent.toLowerCase() === e.key.toLowerCase());
-      } else {
-        textField.value += e.key;  
-        return buttons.find(button => button.firstChild.textContent.toLowerCase() === e.key.toLowerCase()); 
-      }
+    if (isShift) {
+      textField.value += e.key;  
+      return buttons.find(button => button.lastChild.textContent.toLowerCase() === e.key.toLowerCase());
+    } else {
+      textField.value += e.key;  
+      return buttons.find(button => button.firstChild.textContent.toLowerCase() === e.key.toLowerCase()); 
+    }
   }
 };
 
@@ -352,7 +354,7 @@ document.addEventListener('keydown', (e) => {
   try {
     button.classList.add('keyboard__key_push');
   } catch (error) {
-    alert("Клавиши нет на виртуальной клавиатуре\nThis key doesn't exist on virtual keyboard");
+    alert('Клавиши нет на виртуальной клавиатуре\nThis key doesn\'t exist on virtual keyboard');
     return;
   }
 
