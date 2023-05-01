@@ -1,6 +1,5 @@
-
-//alert('Чтобы всё работало корректно, язык ввода вашего устройства должен соответствовать языку виртуальной клавиатуры.\n\nFor everything to work correctly, the input language of your device must match the language of the virtual keyboard.')
-//alert('Нажмите shift + alt для смены языка.\n\nPush shift + alt to change language.');
+alert('Чтобы всё работало корректно, язык ввода вашего устройства должен соответствовать языку виртуальной клавиатуры.\n\nFor everything to work correctly, the input language of your device must match the language of the virtual keyboard.')
+alert('Нажмите shift + alt для смены языка.\n\nPush shift + alt to change language.');
 
 const container = document.createElement('main');
 const textField = document.createElement('textarea');
@@ -104,7 +103,7 @@ const shiftEvent = (value) => {
 const altEvent = (value) => {
   isAlt = value;
   if (isAlt && isShift) {
-    changeLanguage(russian);
+    changeLanguage();
   }
 };
 
@@ -227,8 +226,11 @@ const checkCurrentLanguage = () => {
   }
 };
 
-const changeLanguage = () => {
+const changeLanguage = (storageLayout) => {
   let layout = checkCurrentLanguage();
+  if (storageLayout) {
+    layout = storageLayout;
+  }
   buttons.forEach(key =>{
     if (key.classList.contains('_printable')) {
       const keyNodes = key.childNodes;
@@ -243,7 +245,19 @@ const changeLanguage = () => {
       });
     }
   });
+
+  if (layout == russian) {
+    localStorage.setItem('layout', 'Russian');
+  } else {
+    localStorage.setItem('layout', 'English');
+  }
 };
+
+if (localStorage.getItem('layout') == 'Russian') {
+  changeLanguage(russian);
+} else {
+  changeLanguage(english);
+}
 
 const findButton = (e) => {
 
